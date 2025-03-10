@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+  jobs     Job[]
+}
+
+model Job {
+  id        Int    @id @default(autoincrement())
+  company   String
+  logo      String
+  position  String
+  role      String
+  level     String
+  postedAt  String
+  contract  String
+  location  String
+  languages String
+  tools     String
+  userId    Int?
+  user      User?  @relation(fields: [userId], references: [id])
+
+  @@index([userId], map: "Job_userId_fkey")
+}
