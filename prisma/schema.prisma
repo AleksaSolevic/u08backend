@@ -8,14 +8,16 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  password String
-  jobs     Job[]
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  jobs      Job[]
 }
 
 model Job {
-  id        Int    @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   company   String
   logo      String
   position  String
@@ -26,8 +28,8 @@ model Job {
   location  String
   languages String
   tools     String
-  userId    Int?
-  user      User?  @relation(fields: [userId], references: [id])
+  userId    String?
+  user      User?   @relation(fields: [userId], references: [id])
 
   @@index([userId], map: "Job_userId_fkey")
 }
